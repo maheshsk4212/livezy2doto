@@ -1,11 +1,31 @@
-import { CheckCircle2, Package, ArrowRight, Copy, Check } from "lucide-react";
+import { CheckCircle2, Package, ArrowRight, Copy, Check, Truck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useStore } from "../../store";
 
 export function OrderSuccess({ orderId }: { orderId: string }) {
-  const { go } = useStore();
+  const { go, getOrder } = useStore();
   const [mounted, setMounted] = useState(false);
   const [copied, setCopied] = useState(false);
+  const order = getOrder(orderId);
+
+  const currentStep = (() => {
+    switch (order?.status) {
+      case "packed": return 1;
+      case "shipped": return 2;
+      case "out": return 3;
+      case "delivered": return 4;
+      default: return 0;
+    }
+  })();
+  const currentLabel = order?.status
+    ? {
+        placed: "Placed",
+        packed: "Packed",
+        shipped: "Shipped",
+        out: "Out for delivery",
+        delivered: "Delivered",
+      }[order.status]
+    : "Placed";
 
   useEffect(() => {
     const t = requestAnimationFrame(() => setMounted(true));
@@ -81,7 +101,12 @@ export function OrderSuccess({ orderId }: { orderId: string }) {
               </span>
             </button>
           </div>
-          <button className="text-xs text-indigo-600 hover:underline">Track</button>
+          <button
+            onClick={() => go({ name: "shop-tracker", orderId })}
+            className="text-xs text-indigo-600 hover:underline inline-flex items-center gap-1"
+          >
+            <Truck className="w-3 h-3" /> Track
+          </button>
         </div>
 
         <div className="h-px bg-slate-100 my-3" />
@@ -95,20 +120,29 @@ export function OrderSuccess({ orderId }: { orderId: string }) {
         {/* Progress tracker */}
         <div className="mt-4">
           <div className="flex justify-between text-[10px] text-slate-500 mb-1.5">
-            <span className="text-emerald-700" style={{ fontWeight: 600 }}>Placed</span>
-            <span>Packed</span>
-            <span>Shipped</span>
-            <span>Delivered</span>
+            {["Placed", "Packed", "Shipped", "Out", "Delivered"].map((label, i) => (
+              <span
+                key={label}
+                className={i <= currentStep ? "text-emerald-700" : ""}
+                style={{ fontWeight: i <= currentStep ? 600 : undefined }}
+              >
+                {label}
+              </span>
+            ))}
           </div>
           <div className="relative h-1 rounded-full bg-slate-100 overflow-hidden">
             <div
               className="absolute inset-y-0 left-0 bg-emerald-500 rounded-full transition-all ease-out"
               style={{
-                width: mounted ? "25%" : "0%",
+                width: mounted ? `${Math.max(1, currentStep + 1) * 20}%` : "0%",
                 transitionDuration: "900ms",
                 transitionDelay: "400ms",
               }}
             />
+          </div>
+          <div className="text-[11px] text-slate-500 mt-1.5 inline-flex items-center gap-1">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+            Current status: <span className="text-slate-900" style={{ fontWeight: 600 }}>{currentLabel}</span>
           </div>
         </div>
       </div>
@@ -127,11 +161,11 @@ export function OrderSuccess({ orderId }: { orderId: string }) {
           View orders
         </button>
         <button
-          onClick={() => go({ name: "dashboard" })}
+          onClick={() => go({ name: "shop-tracker", orderId })}
           className="h-11 rounded-lg bg-indigo-600 text-white text-sm inline-flex items-center justify-center gap-1.5 active:bg-indigo-700 transition-colors"
           style={{ fontWeight: 600 }}
         >
-          Back to home <ArrowRight className="w-4 h-4" />
+          Track order <ArrowRight className="w-4 h-4" />
         </button>
       </div>
 

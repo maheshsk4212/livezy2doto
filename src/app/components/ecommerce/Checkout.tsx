@@ -27,7 +27,7 @@ const REWARD_POINTS = 2340;
 const SUB_DISCOUNT = 0.1;
 
 export function Checkout() {
-  const { cart, go, clearCart } = useStore();
+  const { cart, go, clearCart, placeOrder: createOrder } = useStore();
   const [step, setStep] = useState<"address" | "payment">("address");
   const [pay, setPay] = useState("saved-card");
   const [deliveryMode, setDeliveryMode] = useState<"standard" | "express">("standard");
@@ -52,8 +52,15 @@ export function Checkout() {
   const total = Math.max(0, subtotal + deliveryFee - couponDiscount - pointsApplied);
   const totalSavings = mrpTotal - total;
 
-  const placeOrder = () => {
-    const id = "LZ" + Math.floor(100000 + Math.random() * 900000);
+  const submitOrder = () => {
+    const eta = deliveryMode === "express" ? "Arriving tomorrow by 9 PM" : "Arriving Sat, 26 Apr";
+    const id = createOrder({
+      items: cart,
+      total,
+      payment: pay,
+      deliveryMode,
+      eta,
+    });
     clearCart();
     go({ name: "shop-success", orderId: id });
   };
@@ -188,7 +195,7 @@ export function Checkout() {
       )}
 
       {step === "payment" && (
-        <PaymentAccordion pay={pay} setPay={setPay} total={total} onPlaceOrder={placeOrder} />
+        <PaymentAccordion pay={pay} setPay={setPay} total={total} onPlaceOrder={submitOrder} />
       )}
 
       {/* Rewards claim */}

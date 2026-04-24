@@ -6,6 +6,7 @@ import { ShopHome } from "./components/ecommerce/ShopHome";
 import { Category } from "./components/ecommerce/Category";
 import { CategoryList } from "./components/ecommerce/CategoryList";
 import { ProductDetail } from "./components/ecommerce/ProductDetail";
+import { OrderTracker } from "./components/ecommerce/OrderTracker";
 import { Cart } from "./components/ecommerce/Cart";
 import { Checkout } from "./components/ecommerce/Checkout";
 import { OrderSuccess } from "./components/ecommerce/OrderSuccess";
@@ -27,6 +28,7 @@ function Shell() {
       case "shop-cart": return "My Cart";
       case "shop-checkout": return "Checkout";
       case "shop-success": return "Order Confirmed";
+      case "shop-tracker": return "Track Order";
       case "shop-orders": return "My Orders";
       case "account": return "Account";
       case "lob-stub": return "Service";
@@ -48,6 +50,7 @@ function Shell() {
     case "shop-cart": content = <Cart />; break;
     case "shop-checkout": content = <Checkout />; break;
     case "shop-success": content = <OrderSuccess orderId={screen.orderId} />; break;
+    case "shop-tracker": content = <OrderTracker orderId={screen.orderId} />; break;
     case "shop-orders": content = <Orders />; break;
     case "account": content = <Account />; break;
     case "lob-stub": content = <LobStub lob={screen.lob} />; break;

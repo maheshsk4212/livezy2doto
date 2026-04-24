@@ -11,6 +11,7 @@ export type Screen =
   | { name: "shop-cart" }
   | { name: "shop-checkout" }
   | { name: "shop-success"; orderId: string }
+  | { name: "shop-tracker"; orderId: string }
   | { name: "shop-orders" }
   | { name: "account" }
   | { name: "lob-stub"; lob: string };
@@ -21,6 +22,27 @@ export type CartItem = {
   size?: string;
   color?: string;
   subscribe?: boolean;
+};
+
+export type OrderStatus = "placed" | "packed" | "shipped" | "out" | "delivered";
+
+export type OrderItem = {
+  product: Product;
+  qty: number;
+  size?: string;
+  color?: string;
+  subscribe?: boolean;
+};
+
+export type OrderRecord = {
+  id: string;
+  items: OrderItem[];
+  status: OrderStatus;
+  eta: string;
+  total: number;
+  payment: string;
+  deliveryMode: "standard" | "express";
+  createdAt: string;
 };
 
 type Store = {
@@ -34,6 +56,15 @@ type Store = {
   setQty: (id: string, qty: number) => void;
   toggleSubscribe: (id: string) => void;
   clearCart: () => void;
+  orders: OrderRecord[];
+  placeOrder: (payload: {
+    items: OrderItem[];
+    total: number;
+    payment: string;
+    deliveryMode: "standard" | "express";
+    eta: string;
+  }) => string;
+  getOrder: (id: string) => OrderRecord | undefined;
   wishlist: string[];
   toggleWish: (id: string) => void;
   recentlyViewed: string[];
@@ -43,12 +74,46 @@ type Store = {
 
 const Ctx = createContext<Store | null>(null);
 
+const seedOrders: OrderRecord[] = [
+  {
+    id: "LZ482019",
+    items: [{ product: { id: "p4" } as Product, qty: 1 }],
+    status: "out",
+    eta: "Arriving today by 7 PM",
+    total: 7499,
+    payment: "UPI",
+    deliveryMode: "express",
+    createdAt: "2026-04-24T10:00:00.000Z",
+  },
+  {
+    id: "LZ481220",
+    items: [{ product: { id: "p1" } as Product, qty: 1 }],
+    status: "shipped",
+    eta: "Arriving Sat, 26 Apr",
+    total: 4299,
+    payment: "UPI",
+    deliveryMode: "standard",
+    createdAt: "2026-04-23T09:15:00.000Z",
+  },
+  {
+    id: "LZ479833",
+    items: [{ product: { id: "p9" } as Product, qty: 1 }],
+    status: "delivered",
+    eta: "Delivered 20 Apr",
+    total: 599,
+    payment: "Card",
+    deliveryMode: "standard",
+    createdAt: "2026-04-20T08:30:00.000Z",
+  },
+];
+
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [screen, setScreen] = useState<Screen>({ name: "dashboard" });
   const [history, setHistory] = useState<Screen[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
+  const [orders, setOrders] = useState<OrderRecord[]>(seedOrders);
 
   const go = (s: Screen) => {
     setHistory((h) => [...h, screen]);
@@ -91,6 +156,28 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setWishlist((w) => (w.includes(id) ? w.filter((x) => x !== id) : [...w, id]));
   const markViewed = (id: string) =>
     setRecentlyViewed((items) => [id, ...items.filter((x) => x !== id)].slice(0, 8));
+  const placeOrder = (payload: {
+    items: OrderItem[];
+    total: number;
+    payment: string;
+    deliveryMode: "standard" | "express";
+    eta: string;
+  }) => {
+    const id = "LZ" + Math.floor(100000 + Math.random() * 900000);
+    const next: OrderRecord = {
+      id,
+      items: payload.items,
+      status: "placed",
+      eta: payload.eta,
+      total: payload.total,
+      payment: payload.payment,
+      deliveryMode: payload.deliveryMode,
+      createdAt: new Date().toISOString(),
+    };
+    setOrders((list) => [next, ...list]);
+    return id;
+  };
+  const getOrder = (id: string) => orders.find((o) => o.id === id);
 
   const value = useMemo<Store>(
     () => ({
@@ -104,13 +191,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       setQty,
       toggleSubscribe,
       clearCart,
+      orders,
+      placeOrder,
+      getOrder,
       wishlist,
       toggleWish,
       recentlyViewed,
       markViewed,
       address: "Home · Koramangala, Bengaluru 560034",
     }),
-    [screen, history, cart, wishlist, recentlyViewed],
+    [screen, history, cart, wishlist, orders, recentlyViewed],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
