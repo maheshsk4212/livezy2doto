@@ -1,4 +1,4 @@
-import { SlidersHorizontal, Percent, Truck, Sparkles, Tag } from "lucide-react";
+import { SlidersHorizontal, Percent, Truck, Sparkles, Tag, ChevronDown } from "lucide-react";
 import { useRef, useState } from "react";
 import { categories, products } from "../../data/products";
 import { ProductCard } from "../ProductCard";
@@ -234,22 +234,25 @@ export function Category({ categoryId }: { categoryId: string }) {
       </div>
 
       <div className="px-4 flex items-center justify-between text-xs text-slate-600 mt-1">
-        <div>
+        <div className="min-w-0 pr-2">
           Showing {sorted.length} items in <span className="text-slate-900">{cat?.name}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value)}
-            className="text-xs bg-transparent border border-slate-200 rounded-full px-2 py-1"
-          >
-            <option value="popular">Popular</option>
-            <option value="rating">Top rated</option>
-            <option value="low">Price low → high</option>
-            <option value="high">Price high → low</option>
-          </select>
-          <button className="flex items-center gap-1 border border-slate-200 rounded-full px-2 py-1">
-            <SlidersHorizontal className="w-3.5 h-3.5" /> Filter
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="relative">
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+              className="h-8 w-[92px] appearance-none text-xs bg-white border border-slate-200 rounded-full pl-2.5 pr-8 leading-none text-slate-700"
+            >
+              <option value="popular">Popular</option>
+              <option value="rating">Top rated</option>
+              <option value="low">Price low → high</option>
+              <option value="high">Price high → low</option>
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 w-3.5 h-3.5 -translate-y-1/2 text-slate-500" />
+          </div>
+          <button className="h-8 inline-flex items-center gap-1 border border-slate-200 rounded-full px-2.5 text-xs bg-white whitespace-nowrap">
+            <SlidersHorizontal className="w-3 h-3" /> Filter
           </button>
         </div>
       </div>
