@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   Star,
   Heart,
@@ -65,9 +66,29 @@ export function ProductDetail({ productId }: { productId: string }) {
     () => products.filter((x) => x.category === p.category && x.id !== p.id).slice(0, 6),
     [p.id],
   );
+  const ctaBar = typeof document !== "undefined" ? createPortal(
+    <div className="fixed bottom-0 left-1/2 w-full max-w-[460px] -translate-x-1/2 bg-white border-t border-slate-100 p-3 grid grid-cols-2 gap-2 z-50 shadow-[0_-8px_24px_rgba(15,23,42,0.12)] pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
+      <button
+        onClick={() => tryBuy(false)}
+        className="h-12 rounded-xl border border-indigo-600 text-indigo-600"
+        style={{ fontWeight: 600 }}
+      >
+        Add to Cart
+      </button>
+      <button
+        onClick={() => tryBuy(true)}
+        className="h-12 rounded-xl bg-indigo-600 text-white flex flex-col items-center justify-center leading-tight"
+        style={{ fontWeight: 600 }}
+      >
+        <span className="text-xs opacity-90">Buy at</span>
+        <span>{inr(finalPrice)}</span>
+      </button>
+    </div>,
+    document.body,
+  ) : null;
 
   return (
-    <div className="bg-white">
+    <div className="bg-white pb-24">
       {/* Gallery */}
       <div className="relative">
         <div className="aspect-square bg-slate-100">
@@ -532,23 +553,7 @@ export function ProductDetail({ productId }: { productId: string }) {
       </div>
 
       {/* Sticky CTA */}
-      <div className="sticky bottom-0 left-0 right-0 bg-white border-t border-slate-100 p-3 grid grid-cols-2 gap-2 z-30">
-        <button
-          onClick={() => tryBuy(false)}
-          className="h-12 rounded-xl border border-indigo-600 text-indigo-600"
-          style={{ fontWeight: 600 }}
-        >
-          Add to Cart
-        </button>
-        <button
-          onClick={() => tryBuy(true)}
-          className="h-12 rounded-xl bg-indigo-600 text-white flex flex-col items-center justify-center leading-tight"
-          style={{ fontWeight: 600 }}
-        >
-          <span className="text-xs opacity-90">Buy at</span>
-          <span>{inr(finalPrice)}</span>
-        </button>
-      </div>
+      {ctaBar}
 
       {/* Missing selection sheet */}
       <BottomSheet
