@@ -300,7 +300,7 @@ export function Checkout() {
             <div className="text-[11px] text-indigo-600 underline underline-offset-2">View price details</div>
           </button>
           <button
-            onClick={() => (step === "address" ? setStep("payment") : placeOrder())}
+            onClick={() => (step === "address" ? setStep("payment") : submitOrder())}
             className="h-11 px-5 rounded-lg bg-indigo-600 text-white text-sm inline-flex items-center justify-center gap-1.5 active:bg-indigo-700 shrink-0"
             style={{ fontWeight: 600 }}
           >
