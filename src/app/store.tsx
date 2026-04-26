@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState, ReactNode } fr
 import { Product } from "./data/products";
 
 export type Screen =
+  | { name: "auth" }
   | { name: "dashboard" }
   | { name: "shop-home" }
   | { name: "shop-category"; categoryId: string }
@@ -73,6 +74,8 @@ type Store = {
   markViewed: (id: string) => void;
   themeMode: ThemeMode;
   setThemeMode: (theme: ThemeMode) => void;
+  authComplete: boolean;
+  setAuthComplete: (value: boolean) => void;
   address: string;
 };
 
@@ -112,12 +115,21 @@ const seedOrders: OrderRecord[] = [
 ];
 
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const [screen, setScreen] = useState<Screen>({ name: "dashboard" });
+  const [screen, setScreen] = useState<Screen>(() => {
+    if (typeof window === "undefined") return { name: "dashboard" };
+    return window.localStorage.getItem("livezy-authenticated") === "true"
+      ? { name: "dashboard" }
+      : { name: "auth" };
+  });
   const [history, setHistory] = useState<Screen[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
   const [orders, setOrders] = useState<OrderRecord[]>(seedOrders);
+  const [authComplete, setAuthComplete] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem("livezy-authenticated") === "true";
+  });
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
     if (typeof window === "undefined") return "default";
     const saved = window.localStorage.getItem("livezy-theme");
@@ -129,6 +141,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     root.dataset.theme = themeMode;
     window.localStorage.setItem("livezy-theme", themeMode);
   }, [themeMode]);
+
+  useEffect(() => {
+    window.localStorage.setItem("livezy-authenticated", authComplete ? "true" : "false");
+  }, [authComplete]);
 
   const go = (s: Screen) => {
     setHistory((h) => [...h, screen]);
@@ -215,9 +231,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       markViewed,
       themeMode,
       setThemeMode,
+      authComplete,
+      setAuthComplete,
       address: "Home · Koramangala, Bengaluru 560034",
     }),
-    [screen, history, cart, wishlist, orders, recentlyViewed, themeMode],
+    [screen, history, cart, wishlist, orders, recentlyViewed, themeMode, authComplete],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

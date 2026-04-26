@@ -14,11 +14,15 @@ import {
   Tag,
   MapPin,
   Clock3,
+  ShieldCheck,
+  BadgePercent,
+  Check,
 } from "lucide-react";
 import { useStore, inr } from "../store";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { heroBanners, products } from "../data/products";
 import { HScroll } from "./HScroll";
+import { BottomSheet } from "./BottomSheet";
 import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { productImageClass } from "./productImage";
@@ -38,6 +42,7 @@ const lobs = [
 
 export function Dashboard() {
   const { go, recentlyViewed, markViewed } = useStore();
+  const [benefitsOpen, setBenefitsOpen] = useState(false);
   const trending = products.slice(0, 6);
   const dealsNearYou = products
     .filter((p) => p.mrp > p.price && p.mrp - p.price >= 1000)
@@ -332,30 +337,150 @@ export function Dashboard() {
 
       {/* Livezy One upsell */}
       <section className="px-4 mt-5">
-        <motion.button
-          whileTap={{ scale: 0.98 }}
-          className="w-full flex items-center gap-2.5 py-2.5 text-left"
+        <motion.div
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.99 }}
+          className="relative overflow-hidden rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 via-white to-fuchsia-50 p-3.5 shadow-[0_14px_30px_-24px_rgba(79,70,229,0.55)]"
         >
-          <motion.span
-            animate={{ rotate: [0, 12, -8, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, repeatDelay: 1.8 }}
-            className="shrink-0"
-          >
-            <Tag className="w-4 h-4 text-indigo-600" />
-          </motion.span>
-          <div className="flex-1 min-w-0 text-xs text-slate-700 truncate">
-            <span style={{ fontWeight: 600 }}>Livezy One</span> · Free delivery, priority & exclusive deals
+          <motion.div
+            aria-hidden
+            className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-fuchsia-300/30 blur-2xl"
+            animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.85, 0.5] }}
+            transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            aria-hidden
+            className="absolute -left-8 bottom-[-18px] h-24 w-24 rounded-full bg-indigo-300/20 blur-2xl"
+            animate={{ x: [0, 10, 0], y: [0, -6, 0] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          <div className="relative flex items-start gap-3">
+            <motion.div
+              animate={{ rotate: [0, 8, -8, 0], scale: [1, 1.05, 1] }}
+              transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 1.1 }}
+              className="relative shrink-0 rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-500/20"
+            >
+              <div className="flex h-11 w-11 items-center justify-center">
+                <Tag className="h-4 w-4" />
+              </div>
+              <div className="absolute -right-1 -top-1 h-4 w-4 rounded-full bg-amber-300 ring-2 ring-white" />
+            </motion.div>
+
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-indigo-600 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-white">
+                  <Sparkles className="h-3 w-3" />
+                  LIVEZY ONE
+                </span>
+              </div>
+              <div className="mt-1 text-sm font-semibold text-slate-900">
+                Free delivery. Priority support. Extra savings.
+              </div>
+              <div className="mt-1 text-xs text-slate-500">
+                Quick perks for everyday shopping — designed to feel lighter and faster.
+              </div>
+              <div className="mt-1 text-[11px] font-medium text-indigo-700">Save more, ship faster</div>
+            </div>
+
+            <div className="shrink-0">
+              <div className="relative h-14 w-20">
+                <motion.div
+                  animate={{ y: [0, -3, 0], rotate: [0, -2, 0] }}
+                  transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute right-0 top-0 h-11 w-11 rounded-2xl bg-white shadow-lg ring-1 ring-slate-200"
+                />
+                <motion.div
+                  animate={{ y: [0, 2, 0], rotate: [0, 3, 0] }}
+                  transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute left-0 bottom-0 h-11 w-11 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-500/20"
+                >
+                  <div className="flex h-full w-full items-center justify-center text-white">
+                    <Gift className="h-5 w-5" />
+                  </div>
+                </motion.div>
+                <div className="absolute right-3 top-4 h-3 w-8 rounded-full bg-amber-300/80" />
+              </div>
+            </div>
           </div>
-          <motion.span
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 1.6, repeat: Infinity }}
-            className="text-xs text-indigo-600 shrink-0"
-            style={{ fontWeight: 600 }}
-          >
-            Try free
-          </motion.span>
-        </motion.button>
+
+          <div className="relative mt-3 flex items-center justify-between gap-2">
+            <button
+              type="button"
+              onClick={() => go({ name: "account" })}
+              className="inline-flex items-center gap-1 rounded-full bg-indigo-600 px-3 py-1.5 text-[11px] font-semibold text-white shadow-sm active:scale-95"
+            >
+              Try free
+              <ChevronRight className="h-3 w-3" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setBenefitsOpen(true)}
+              className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold text-indigo-700 ring-1 ring-indigo-200 shadow-sm active:scale-95"
+            >
+              Check features
+              <ChevronRight className="h-3 w-3" />
+            </button>
+          </div>
+        </motion.div>
       </section>
+
+      <BottomSheet open={benefitsOpen} onClose={() => setBenefitsOpen(false)} title="Livezy One Benefits">
+        <div className="space-y-4">
+          <p className="text-xs leading-5 text-slate-500">
+            Everything in one place, with the perks that make shopping feel easier.
+          </p>
+          <div className="space-y-2.5">
+            {[
+              { title: "Free delivery", sub: "On eligible orders every time", icon: ShieldCheck, tone: "bg-emerald-600" },
+              { title: "Priority support", sub: "Faster help when you need it", icon: Sparkles, tone: "bg-indigo-600" },
+              { title: "Exclusive deals", sub: "Member-only savings and offers", icon: BadgePercent, tone: "bg-fuchsia-600" },
+              { title: "2x reward points", sub: "Earn faster on every purchase", icon: Gift, tone: "bg-amber-500" },
+              { title: "Early access", sub: "Shop new drops before others", icon: Zap, tone: "bg-sky-600" },
+            ].map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.04, duration: 0.22 }}
+                  className="flex items-start gap-3 rounded-2xl bg-slate-50 px-3 py-3"
+                >
+                  <motion.div
+                    animate={{ y: [0, -2, 0], rotate: [0, 4, 0] }}
+                    transition={{ duration: 2.6 + idx * 0.1, repeat: Infinity, ease: "easeInOut" }}
+                    className={`mt-0.5 flex h-9 w-9 items-center justify-center rounded-full text-white shadow-md ${item.tone}`}
+                  >
+                    <Icon className="h-4 w-4" />
+                  </motion.div>
+                  <div className="min-w-0">
+                    <div className="text-sm font-semibold text-slate-900">{item.title}</div>
+                    <div className="text-xs text-slate-500">{item.sub}</div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+          <div className="flex gap-3 pt-1">
+            <button
+              onClick={() => setBenefitsOpen(false)}
+              className="h-11 flex-1 rounded-full border border-slate-200 bg-white text-sm font-semibold text-slate-700 active:scale-95"
+            >
+              Not now
+            </button>
+            <button
+              onClick={() => {
+                setBenefitsOpen(false);
+                go({ name: "account" });
+              }}
+              className="h-11 flex-1 rounded-full bg-indigo-600 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 active:scale-95"
+            >
+              Try free
+            </button>
+          </div>
+        </div>
+      </BottomSheet>
     </div>
   );
 }

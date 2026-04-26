@@ -13,6 +13,7 @@ import { OrderSuccess } from "./components/ecommerce/OrderSuccess";
 import { Orders } from "./components/ecommerce/Orders";
 import { Account } from "./components/Account";
 import { LobStub } from "./components/LobStub";
+import { Auth } from "./components/Auth";
 import { categories } from "./data/products";
 
 function Shell() {
@@ -39,10 +40,12 @@ function Shell() {
   const showDashboardTop = screen.name === "dashboard";
   const showShopTop = screen.name === "shop-home";
   const showBottomNav = ["dashboard", "shop-home", "shop-orders", "account"].includes(screen.name);
+  const showAuthTop = screen.name === "auth";
 
   let content: React.ReactNode = null;
   switch (screen.name) {
     case "dashboard": content = <Dashboard />; break;
+    case "auth": content = <Auth />; break;
     case "shop-home": content = <ShopHome />; break;
     case "shop-category": content = <Category categoryId={screen.categoryId} />; break;
     case "shop-category-list": content = <CategoryList categoryId={screen.categoryId} />; break;
@@ -62,7 +65,7 @@ function Shell() {
       <div className="w-full max-w-[460px] min-h-screen bg-slate-50 relative flex flex-col shadow-xl overflow-x-hidden">
         {showDashboardTop && <TopBar variant="dashboard" />}
         {showShopTop && <TopBar variant="shop" />}
-        {!showDashboardTop && !showShopTop && <TopBar variant="back" title={titleForBack()} />}
+        {!showDashboardTop && !showShopTop && !showAuthTop && <TopBar variant="back" title={titleForBack()} />}
         <main className={`flex-1 min-w-0 ${showBottomNav ? "pb-20" : ""}`}>{content}</main>
         {showBottomNav && <BottomNav />}
       </div>

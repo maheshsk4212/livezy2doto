@@ -17,7 +17,7 @@ import { BottomSheet } from "./BottomSheet";
 import { useStore } from "../store";
 
 export function Account() {
-  const { themeMode, setThemeMode } = useStore();
+  const { themeMode, setThemeMode, setAuthComplete, go } = useStore();
   const [themeSheetOpen, setThemeSheetOpen] = useState(false);
 
   const currentThemeLabel = themeMode === "green" ? "Green" : "Default";
@@ -105,7 +105,13 @@ export function Account() {
       ))}
 
       <div className="px-4 mt-5">
-        <button className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-slate-200 text-rose-600 text-sm">
+        <button
+          onClick={() => {
+            setAuthComplete(false);
+            go({ name: "auth" });
+          }}
+          className="w-full flex items-center justify-center gap-2 h-11 rounded-xl border border-slate-200 text-rose-600 text-sm active:scale-[0.99]"
+        >
           <LogOut className="w-4 h-4" /> Log out
         </button>
         <div className="text-center text-[11px] text-slate-400 mt-3">Livezy · v1.0.0</div>
