@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
 import { Product } from "./data/products";
 
 export type Screen =
@@ -45,6 +45,8 @@ export type OrderRecord = {
   createdAt: string;
 };
 
+export type ThemeMode = "default" | "green";
+
 type Store = {
   screen: Screen;
   history: Screen[];
@@ -69,6 +71,8 @@ type Store = {
   toggleWish: (id: string) => void;
   recentlyViewed: string[];
   markViewed: (id: string) => void;
+  themeMode: ThemeMode;
+  setThemeMode: (theme: ThemeMode) => void;
   address: string;
 };
 
@@ -114,6 +118,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [recentlyViewed, setRecentlyViewed] = useState<string[]>([]);
   const [orders, setOrders] = useState<OrderRecord[]>(seedOrders);
+  const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
+    if (typeof window === "undefined") return "default";
+    const saved = window.localStorage.getItem("livezy-theme");
+    return saved === "green" ? "green" : "default";
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.dataset.theme = themeMode;
+    window.localStorage.setItem("livezy-theme", themeMode);
+  }, [themeMode]);
 
   const go = (s: Screen) => {
     setHistory((h) => [...h, screen]);
@@ -198,9 +213,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       toggleWish,
       recentlyViewed,
       markViewed,
+      themeMode,
+      setThemeMode,
       address: "Home · Koramangala, Bengaluru 560034",
     }),
-    [screen, history, cart, wishlist, orders, recentlyViewed],
+    [screen, history, cart, wishlist, orders, recentlyViewed, themeMode],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

@@ -39,6 +39,9 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --theme-primary: #4f46e5;
+  --theme-primary-strong: #4338ca;
+  --theme-primary-soft: rgba(79, 70, 229, 0.08);
 }
 
 .dark {
@@ -76,6 +79,83 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.269 0 0);
   --sidebar-ring: oklch(0.439 0 0);
+}
+
+[data-theme="green"] {
+  --primary: #0ca411;
+  --primary-foreground: #ffffff;
+  --ring: oklch(0.72 0.17 144);
+  --sidebar-primary: #0ca411;
+  --sidebar-primary-foreground: #ffffff;
+  --theme-primary: #0ca411;
+  --theme-primary-strong: #08780d;
+  --theme-primary-soft: rgba(12, 164, 17, 0.1);
+}
+
+[data-theme="green"] .bg-indigo-600 {
+  background-color: #0ca411 !important;
+}
+
+[data-theme="green"] .bg-indigo-500 {
+  background-color: #0b8f10 !important;
+}
+
+[data-theme="green"] .bg-indigo-700 {
+  background-color: #08780d !important;
+}
+
+[data-theme="green"] .bg-indigo-50,
+[data-theme="green"] .bg-indigo-50\/40 {
+  background-color: rgba(12, 164, 17, 0.08) !important;
+}
+
+[data-theme="green"] .bg-indigo-100 {
+  background-color: rgba(12, 164, 17, 0.12) !important;
+}
+
+[data-theme="green"] .text-indigo-500,
+[data-theme="green"] .text-indigo-600,
+[data-theme="green"] .text-indigo-700 {
+  color: #0ca411 !important;
+}
+
+[data-theme="green"] .border-indigo-100,
+[data-theme="green"] .border-indigo-200,
+[data-theme="green"] .border-indigo-500,
+[data-theme="green"] .border-indigo-600 {
+  border-color: rgba(12, 164, 17, 0.28) !important;
+}
+
+[data-theme="green"] .ring-indigo-200 {
+  --tw-ring-color: rgba(12, 164, 17, 0.18) !important;
+}
+
+[data-theme="green"] .ring-indigo-600 {
+  --tw-ring-color: #0ca411 !important;
+}
+
+[data-theme="green"] .fill-indigo-600 {
+  fill: #0ca411 !important;
+}
+
+[data-theme="green"] .bg-gradient-to-b.from-indigo-600.to-indigo-500 {
+  background-image: linear-gradient(to bottom, #0ca411, #08780d) !important;
+}
+
+[data-theme="green"] .bg-gradient-to-r.from-indigo-600.to-fuchsia-600 {
+  background-image: linear-gradient(to right, #0ca411, #17a34a) !important;
+}
+
+[data-theme="green"] .bg-gradient-to-br.from-indigo-500.to-violet-600 {
+  background-image: linear-gradient(to bottom right, #0ca411, #08780d) !important;
+}
+
+[data-theme="green"] .bg-gradient-to-br.from-indigo-300.via-fuchsia-300.to-amber-300 {
+  background-image: linear-gradient(to bottom right, rgba(12, 164, 17, 0.28), rgba(23, 163, 74, 0.22), rgba(245, 158, 11, 0.25)) !important;
+}
+
+[data-theme="green"] .bg-gradient-to-b.from-white.to-indigo-50\/60 {
+  background-image: linear-gradient(to bottom, #ffffff, rgba(12, 164, 17, 0.08)) !important;
 }
 
 @theme inline {
