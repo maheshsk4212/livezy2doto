@@ -2,6 +2,7 @@ import { Package, Truck, CheckCircle2 } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { products } from "../../data/products";
 import { inr, useStore } from "../../store";
+import { productImageClass } from "../productImage";
 
 export function Orders() {
   const { go, orders } = useStore();
@@ -26,7 +27,7 @@ export function Orders() {
             className="w-full flex gap-3 bg-white border border-slate-100 rounded-xl p-3 text-left active:scale-[0.99] transition-transform"
           >
             <div className="w-16 h-16 rounded-lg bg-slate-100 overflow-hidden shrink-0">
-              <ImageWithFallback src={p.image} alt="" className="w-full h-full object-cover" />
+              <ImageWithFallback src={p.image} alt="" className={productImageClass} />
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-xs text-slate-500">Order #{o.id}</div>

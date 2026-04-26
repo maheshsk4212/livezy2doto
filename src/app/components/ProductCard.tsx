@@ -2,6 +2,7 @@ import { Star, Heart } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Product } from "../data/products";
 import { inr, useStore } from "../store";
+import { productImageClass } from "./productImage";
 
 export function ProductCard({ p }: { p: Product }) {
   const { go, wishlist, toggleWish, markViewed } = useStore();
@@ -15,8 +16,8 @@ export function ProductCard({ p }: { p: Product }) {
       }}
       className="text-left bg-white rounded-2xl overflow-hidden border border-slate-100 active:scale-[0.99] transition"
     >
-      <div className="aspect-square w-full bg-slate-100 relative">
-        <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover" />
+      <div className="aspect-square w-full bg-slate-100 relative overflow-hidden">
+        <ImageWithFallback src={p.image} alt={p.name} className={productImageClass} />
         <span className="absolute top-2 left-2 bg-rose-500 text-white text-[10px] px-1.5 py-0.5 rounded">
           {off}% OFF
         </span>

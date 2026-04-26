@@ -21,6 +21,7 @@ import { heroBanners, products } from "../data/products";
 import { HScroll } from "./HScroll";
 import { motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { productImageClass } from "./productImage";
 
 const lobs = [
   { id: "shop", name: "Shop", icon: ShoppingBag, tint: "bg-gradient-to-br from-indigo-500 to-violet-600" },
@@ -201,9 +202,9 @@ export function Dashboard() {
                 whileHover={{ y: -3 }}
                 className="snap-start shrink-0 w-40 text-left bg-white rounded-2xl border border-slate-100 overflow-hidden"
               >
-                <div className="aspect-square w-full bg-slate-100 overflow-hidden relative">
-                  <motion.div className="w-full h-full" whileHover={{ scale: 1.06 }} transition={{ duration: 0.3 }}>
-                    <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover" />
+              <div className="aspect-square w-full bg-slate-100 overflow-hidden relative">
+                <motion.div className="w-full h-full" whileHover={{ scale: 1.06 }} transition={{ duration: 0.3 }}>
+                    <ImageWithFallback src={p.image} alt={p.name} className={productImageClass} />
                   </motion.div>
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
@@ -253,9 +254,9 @@ export function Dashboard() {
                 whileHover={{ y: -3 }}
                 className="snap-start shrink-0 w-44 text-left bg-white rounded-2xl border border-emerald-100 overflow-hidden shadow-sm"
               >
-                <div className="aspect-square w-full bg-emerald-50 overflow-hidden relative">
-                  <motion.div className="w-full h-full" whileHover={{ scale: 1.06 }} transition={{ duration: 0.3 }}>
-                    <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover" />
+              <div className="aspect-square w-full bg-emerald-50 overflow-hidden relative">
+                <motion.div className="w-full h-full" whileHover={{ scale: 1.06 }} transition={{ duration: 0.3 }}>
+                    <ImageWithFallback src={p.image} alt={p.name} className={productImageClass} />
                   </motion.div>
                   <div className="absolute top-2 left-2 bg-emerald-600 text-white text-[10px] px-1.5 py-0.5 rounded">
                     Nearby
@@ -304,9 +305,9 @@ export function Dashboard() {
                 whileHover={{ y: -3 }}
                 className="snap-start shrink-0 w-40 text-left bg-white rounded-2xl border border-slate-100 overflow-hidden"
               >
-                <div className="aspect-square w-full bg-slate-100 overflow-hidden relative">
-                  <motion.div className="w-full h-full" whileHover={{ scale: 1.06 }} transition={{ duration: 0.3 }}>
-                    <ImageWithFallback src={p.image} alt={p.name} className="w-full h-full object-cover" />
+              <div className="aspect-square w-full bg-slate-100 overflow-hidden relative">
+                <motion.div className="w-full h-full" whileHover={{ scale: 1.06 }} transition={{ duration: 0.3 }}>
+                    <ImageWithFallback src={p.image} alt={p.name} className={productImageClass} />
                   </motion.div>
                   <div className="absolute top-2 left-2 bg-slate-900/80 text-white text-[10px] px-1.5 py-0.5 rounded">
                     Viewed

@@ -2,6 +2,7 @@ import { CheckCircle2, Clock3, MapPin, Package, Truck, ArrowRight, Sparkles } fr
 import { products } from "../../data/products";
 import { inr, useStore } from "../../store";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
+import { productImageClass } from "../productImage";
 
 const steps = [
   { key: "placed", label: "Placed", hint: "Order confirmed" },
@@ -148,13 +149,13 @@ export function OrderTracker({ orderId }: { orderId: string }) {
           {order.items.map((item) => {
             const full = products.find((p) => p.id === item.product.id) ?? item.product;
             return (
-              <button
+                <button
                 key={full.id + (item.size ?? "") + (item.color ?? "")}
                 onClick={() => go({ name: "shop-pdp", productId: full.id })}
                 className="w-full flex items-center gap-3 rounded-2xl border border-slate-100 bg-white p-3 text-left"
               >
                 <div className="w-14 h-14 rounded-xl overflow-hidden bg-slate-100 shrink-0">
-                  <ImageWithFallback src={full.image} alt={full.name} className="w-full h-full object-cover" />
+                  <ImageWithFallback src={full.image} alt={full.name} className={productImageClass} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-[11px] text-slate-500">{full.brand}</div>

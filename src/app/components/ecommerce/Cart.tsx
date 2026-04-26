@@ -18,6 +18,7 @@ import {
 import { inr, useStore } from "../../store";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { BottomSheet } from "../BottomSheet";
+import { productImageClass } from "../productImage";
 
 const REWARD_POINTS = 2340; // 1 pt = ₹1
 const SUB_DISCOUNT = 0.1; // 10% off when subscribed
@@ -95,7 +96,7 @@ export function Cart() {
                   onClick={() => go({ name: "shop-pdp", productId: i.product.id })}
                   className="w-24 h-28 rounded-lg bg-slate-100 overflow-hidden shrink-0"
                 >
-                  <ImageWithFallback src={i.product.image} alt="" className="w-full h-full object-cover" />
+                  <ImageWithFallback src={i.product.image} alt="" className={productImageClass} />
                 </button>
 
                 <div className="flex-1 min-w-0">

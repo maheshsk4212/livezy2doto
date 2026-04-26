@@ -22,6 +22,7 @@ import {
 import { inr, useStore } from "../../store";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { BottomSheet } from "../BottomSheet";
+import { productImageClass } from "../productImage";
 
 const REWARD_POINTS = 2340;
 const SUB_DISCOUNT = 0.1;
@@ -95,7 +96,7 @@ export function Checkout() {
               return (
                 <div key={i.product.id + (i.size ?? "") + (i.color ?? "")} className="flex gap-3">
                   <div className="w-14 h-14 rounded-lg bg-slate-100 overflow-hidden shrink-0 relative">
-                    <ImageWithFallback src={i.product.image} alt="" className="w-full h-full object-cover" />
+                    <ImageWithFallback src={i.product.image} alt="" className={productImageClass} />
                     <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 text-[10px] rounded-full bg-slate-900 text-white flex items-center justify-center">
                       {i.qty}
                     </span>
