@@ -240,7 +240,7 @@ export function ProductDetail({ productId }: { productId: string }) {
         <div className="space-y-1.5 text-xs text-slate-600">
           <div className="flex items-center gap-2">
             <Truck className="w-3.5 h-3.5 text-emerald-600" />
-            <span>Free delivery by <b className="text-slate-900">Sat, 26 Apr</b></span>
+            <span>Delivery by <b className="text-slate-900">Sat, 26 Apr</b></span>
           </div>
           <div className="flex items-center gap-2">
             <Clock className="w-3.5 h-3.5 text-amber-600" />

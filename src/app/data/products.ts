@@ -63,7 +63,7 @@ export const products: Product[] = [
     sizes: ["UK 6", "UK 7", "UK 8", "UK 9", "UK 10"],
     description:
       "Lightweight everyday runners with a breathable mesh upper and responsive foam midsole for long-distance comfort.",
-    delivery: "Free delivery by Sat, 26 Apr",
+    delivery: "Delivery by Sat, 26 Apr",
   },
   {
     id: "p2",
@@ -77,7 +77,7 @@ export const products: Product[] = [
     category: "footwear",
     sizes: ["UK 7", "UK 8", "UK 9", "UK 10"],
     description: "Minimalist all-white leather sneakers — pairs with everything.",
-    delivery: "Free delivery by Sun, 27 Apr",
+    delivery: "Delivery by Sun, 27 Apr",
   },
   {
     id: "p3",
@@ -113,7 +113,7 @@ export const products: Product[] = [
     tags: ["deal"],
     description:
       "Active noise cancellation, 40h battery life, premium leather ear cushions. Bluetooth 5.3 with multipoint pairing.",
-    delivery: "Free delivery by Sat, 26 Apr",
+    delivery: "Delivery by Sat, 26 Apr",
   },
   {
     id: "p5",
@@ -131,7 +131,7 @@ export const products: Product[] = [
     ],
     category: "electronics",
     description: "Studio-grade drivers with hi-res audio certification.",
-    delivery: "Free delivery by Sat, 26 Apr",
+    delivery: "Delivery by Sat, 26 Apr",
   },
   {
     id: "p6",
@@ -144,7 +144,7 @@ export const products: Product[] = [
     image: img("photo-1590658268037-6bf12165a8df"),
     category: "electronics",
     description: "ENx noise cancellation mic, 50h playback.",
-    delivery: "Free delivery tomorrow",
+    delivery: "Delivery by tomorrow",
   },
   {
     id: "p7",
@@ -158,7 +158,7 @@ export const products: Product[] = [
     category: "watches",
     tags: ["deal"],
     description: "AMOLED always-on, SpO2, 100+ sports modes, 7-day battery.",
-    delivery: "Free delivery tomorrow",
+    delivery: "Delivery by tomorrow",
   },
   {
     id: "p8",
@@ -171,7 +171,7 @@ export const products: Product[] = [
     image: img("photo-1633339257118-28dd67299a4d"),
     category: "watches",
     description: "Stainless steel chrono with sapphire crystal.",
-    delivery: "Free delivery by Mon, 28 Apr",
+    delivery: "Delivery by Mon, 28 Apr",
   },
   {
     id: "p9",
@@ -196,7 +196,7 @@ export const products: Product[] = [
     ],
     description:
       "Soft combed-cotton tee in a relaxed regular fit. Pre-shrunk fabric with reinforced shoulder seams, ribbed neckline that holds its shape wash after wash. A wardrobe essential that layers effortlessly with everything you own.",
-    delivery: "Free delivery by Fri, 25 Apr",
+    delivery: "Delivery by Fri, 25 Apr",
     highlights: [
       "100% combed cotton, 180 GSM",
       "Pre-shrunk · colour-safe wash",
@@ -254,7 +254,7 @@ export const products: Product[] = [
       { name: "Olive", hex: "#556b2f", thumb: img("photo-1714144069905-f9bd839184af"), images: [img("photo-1714144069905-f9bd839184af")] },
     ],
     description: "Tee, sneakers and accessories styled for the street.",
-    delivery: "Free delivery by Sat, 26 Apr",
+    delivery: "Delivery by Sat, 26 Apr",
     highlights: ["3-piece combo", "Street-ready styling", "Loose fit silhouette"],
   },
   {
@@ -268,7 +268,7 @@ export const products: Product[] = [
     image: img("photo-1553062407-98eeb64c6a62"),
     category: "bags",
     description: "Laptop sleeve, water-resistant, ergonomic straps.",
-    delivery: "Free delivery tomorrow",
+    delivery: "Delivery by tomorrow",
   },
   {
     id: "p12",
@@ -281,7 +281,7 @@ export const products: Product[] = [
     image: img("photo-1553062407-98eeb64c6a62"),
     category: "bags",
     description: "Compact, colourful, campus-ready.",
-    delivery: "Free delivery by Sat, 26 Apr",
+    delivery: "Delivery by Sat, 26 Apr",
   },
   {
     id: "p13",
@@ -301,7 +301,7 @@ export const products: Product[] = [
       { name: "Jet Black", hex: "#0f172a", thumb: img("photo-1530062329328-9734c43ae31b"), images: [img("photo-1530062329328-9734c43ae31b")] },
     ],
     description: "Classic blue denim · stretch fit.",
-    delivery: "Free delivery by Sat, 26 Apr",
+    delivery: "Delivery by Sat, 26 Apr",
   },
   {
     id: "p14",
@@ -321,7 +321,7 @@ export const products: Product[] = [
       { name: "Mint", hex: "#6ee7b7", thumb: img("photo-1602303894456-398ce544d90b"), images: [img("photo-1602303894456-398ce544d90b")] },
     ],
     description: "Breezy rayon · vacation-ready silhouette.",
-    delivery: "Free delivery tomorrow",
+    delivery: "Delivery by tomorrow",
   },
   {
     id: "p15",
@@ -341,7 +341,7 @@ export const products: Product[] = [
       { name: "Burgundy", hex: "#7f1d1d", thumb: img("photo-1632682582909-2b3a2581eef7"), images: [img("photo-1632682582909-2b3a2581eef7")] },
     ],
     description: "Soft brushed fleece · drop-shoulder cut.",
-    delivery: "Free delivery by Mon, 28 Apr",
+    delivery: "Delivery by Mon, 28 Apr",
   },
   {
     id: "p16",
@@ -361,7 +361,7 @@ export const products: Product[] = [
       { name: "Mustard", hex: "#ca8a04", thumb: img("photo-1727835523550-18478cacefa2"), images: [img("photo-1727835523550-18478cacefa2")] },
     ],
     description: "Handwoven cotton silk · festive-ready.",
-    delivery: "Free delivery by Mon, 28 Apr",
+    delivery: "Delivery by Mon, 28 Apr",
   },
   {
     id: "p17",
@@ -381,7 +381,7 @@ export const products: Product[] = [
       { name: "Gold", hex: "#a16207", thumb: img("photo-1758120221788-d576fa58f520"), images: [img("photo-1758120221788-d576fa58f520")] },
     ],
     description: "Zari-woven silk · with matching blouse.",
-    delivery: "Free delivery by Tue, 29 Apr",
+    delivery: "Delivery by Tue, 29 Apr",
   },
   {
     id: "p18",
@@ -401,7 +401,7 @@ export const products: Product[] = [
       { name: "Olive", hex: "#65a30d", thumb: img("photo-1744535814652-9cd3a3dea348"), images: [img("photo-1744535814652-9cd3a3dea348")] },
     ],
     description: "Pure linen · breathable summer staple.",
-    delivery: "Free delivery tomorrow",
+    delivery: "Delivery by tomorrow",
   },
   {
     id: "p19",
@@ -419,7 +419,7 @@ export const products: Product[] = [
       { name: "Black", hex: "#111827", thumb: img("photo-1594223274512-ad4803739b7c"), images: [img("photo-1594223274512-ad4803739b7c")] },
     ],
     description: "Vegan leather · magnetic snap closure.",
-    delivery: "Free delivery by Sat, 26 Apr",
+    delivery: "Delivery by Sat, 26 Apr",
   },
   {
     id: "p20",
@@ -439,7 +439,7 @@ export const products: Product[] = [
       { name: "Black", hex: "#0f172a", thumb: img("photo-1610446243788-2ed70e3ba1f9"), images: [img("photo-1610446243788-2ed70e3ba1f9")] },
     ],
     description: "Quilted bomber with ribbed cuffs.",
-    delivery: "Free delivery by Sat, 26 Apr",
+    delivery: "Delivery by Sat, 26 Apr",
   },
   {
     id: "p21",
@@ -458,7 +458,7 @@ export const products: Product[] = [
       { name: "Navy", hex: "#1e3a8a", thumb: img("photo-1618355281911-84e6ec751d84"), images: [img("photo-1618355281911-84e6ec751d84")] },
     ],
     description: "Tapered fit · 4-way stretch · zip pockets.",
-    delivery: "Free delivery tomorrow",
+    delivery: "Delivery by tomorrow",
   },
   {
     id: "p22",
@@ -478,7 +478,7 @@ export const products: Product[] = [
       { name: "Warm Pack", hex: "#f59e0b", thumb: img("photo-1521572267360-ee0c2909d518"), images: [img("photo-1521572267360-ee0c2909d518")] },
     ],
     description: "Soft cotton · playful prints.",
-    delivery: "Free delivery by Sat, 26 Apr",
+    delivery: "Delivery by Sat, 26 Apr",
   },
 ];
 

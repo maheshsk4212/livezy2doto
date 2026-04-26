@@ -186,7 +186,7 @@ export function Category({ categoryId }: { categoryId: string }) {
             </button>
             <button onClick={() => scrollToGrid()} className="rounded-xl bg-gradient-to-br from-indigo-50 to-sky-50 p-2.5 border border-indigo-100 text-left active:scale-95 transition-transform">
               <Truck className="w-4 h-4 text-indigo-600" />
-              <div className="text-[11px] mt-1" style={{ fontWeight: 700 }}>Free delivery</div>
+              <div className="text-[11px] mt-1" style={{ fontWeight: 700 }}>Delivery by</div>
               <div className="text-[10px] text-slate-500 truncate">On orders ₹499+</div>
             </button>
             <button onClick={() => scrollToGrid()} className="rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 p-2.5 border border-amber-100 text-left active:scale-95 transition-transform">

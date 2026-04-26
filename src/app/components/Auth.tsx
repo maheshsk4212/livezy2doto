@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "motion/react";
 import { ArrowRight, BadgePercent, Chrome, ShieldCheck, Sparkles, Gift, Zap, Apple } from "lucide-react";
 import { useStore } from "../store";
@@ -13,34 +13,71 @@ export function Auth() {
   const [step, setStep] = useState<Step>("phone");
   const [phone, setPhone] = useState("+91 ");
   const [otp, setOtp] = useState("");
+  const [railPage, setRailPage] = useState(0);
 
   const isOtpReady = otp.replace(/\D/g, "").length === 6;
 
   const featureCards = useMemo(
     () => [
       {
-        title: "Safe login with OTP",
-        sub: "Fast, secure entry",
-        icon: ShieldCheck,
+        title: "Shop",
+        sub: "Fashion, gadgets & more",
+        icon: Gift,
         tint: "from-emerald-500 to-teal-600",
       },
       {
-        title: "Fast checkout",
-        sub: "Across all services",
-        icon: Zap,
+        title: "Mart",
+        sub: "Groceries & essentials",
+        icon: ShieldCheck,
         tint: "from-indigo-500 to-violet-600",
       },
       {
-        title: "Rewards & deals",
-        sub: "More reasons to stay",
+        title: "Loans",
+        sub: "Quick credit options",
         icon: BadgePercent,
         tint: "from-fuchsia-500 to-rose-500",
       },
       {
-        title: "One account",
-        sub: "Shop, wallet & more",
-        icon: Gift,
+        title: "Flights",
+        sub: "Book travel in seconds",
+        icon: Zap,
         tint: "from-amber-500 to-orange-500",
+      },
+      {
+        title: "Home",
+        sub: "Repairs and services",
+        icon: ShieldCheck,
+        tint: "from-sky-500 to-blue-600",
+      },
+      {
+        title: "Salon",
+        sub: "Beauty and self-care",
+        icon: BadgePercent,
+        tint: "from-fuchsia-500 to-purple-600",
+      },
+      {
+        title: "Rides",
+        sub: "Quick city travel",
+        icon: Zap,
+        tint: "from-slate-600 to-slate-800",
+      },
+      {
+        title: "Food",
+        sub: "Meals and bites",
+        icon: Gift,
+        tint: "from-orange-500 to-red-500",
+      },
+      {
+        title: "Health",
+        sub: "Care on demand",
+        icon: ShieldCheck,
+        tint: "from-teal-500 to-cyan-600",
+      },
+      {
+        title: "Rewards",
+        sub: "Earn and redeem more",
+        icon: BadgePercent,
+        tint: "from-purple-500 to-pink-500",
       },
     ],
     [],
@@ -50,6 +87,22 @@ export function Auth() {
     setAuthComplete(true);
     go({ name: "dashboard" });
   };
+
+  const featurePages = useMemo(() => {
+    const pages: typeof featureCards[] = [];
+    for (let i = 0; i < featureCards.length; i += 2) {
+      pages.push(featureCards.slice(i, i + 2));
+    }
+    return pages;
+  }, [featureCards]);
+
+  useEffect(() => {
+    if (featurePages.length <= 1) return;
+    const timer = window.setTimeout(() => {
+      setRailPage((page) => (page + 1) % featurePages.length);
+    }, 2600);
+    return () => window.clearTimeout(timer);
+  }, [railPage, featurePages.length]);
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.18),_transparent_34%),linear-gradient(180deg,#ffffff_0%,#f8fafc_45%,#eef2ff_100%)] px-4 py-5">
@@ -171,7 +224,7 @@ export function Auth() {
               Sign up
             </button>
             <div className="mt-4">
-              <div className="text-center text-[11px] uppercase tracking-[0.22em] text-slate-400">or continue with</div>
+              <div className="text-center text-[11px] uppercase tracking-[0.22em] text-slate-400">Explore Livezy services</div>
               <div className="mt-3 grid grid-cols-2 gap-3">
                 <button
                   type="button"
@@ -195,29 +248,36 @@ export function Auth() {
 
           <div className="mt-4 overflow-hidden">
             <motion.div
-              className="flex w-max gap-3"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
+              className="flex w-full py-1"
+              animate={{ x: `-${railPage * 100}%` }}
+              transition={{ duration: 0.7, ease: "easeInOut" }}
             >
-              {[...featureCards, ...featureCards].map((item, idx) => {
-                const Icon = item.icon;
-                return (
-                  <div
-                    key={`${item.title}-${idx}`}
-                    className="w-[168px] shrink-0 rounded-2xl border border-slate-100 bg-white p-3 shadow-sm"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${item.tint} text-white shadow-md`}>
-                        <Icon className="h-4 w-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="text-sm font-semibold text-slate-900">{item.title}</div>
-                        <div className="text-xs text-slate-500">{item.sub}</div>
-                      </div>
-                    </div>
+              {featurePages.map((page, pageIndex) => (
+                <div key={pageIndex} className="w-full shrink-0 px-0.5">
+                  <div className="grid grid-cols-2 gap-3">
+                    {page.map((item, idx) => {
+                      const Icon = item.icon;
+                      return (
+                        <div
+                          key={`${item.title}-${idx}`}
+                          className="rounded-2xl border border-slate-200 bg-white p-3 shadow-[0_8px_20px_-16px_rgba(15,23,42,0.35)]"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${item.tint} text-white shadow-md`}>
+                              <Icon className="h-4 w-4" />
+                            </div>
+                            <div className="min-w-0">
+                              <div className="text-sm font-semibold text-slate-900">{item.title}</div>
+                              <div className="text-xs text-slate-500">{item.sub}</div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                    {page.length === 1 && <div className="rounded-2xl border border-dashed border-slate-200 bg-white/60" />}
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </motion.div>
           </div>
         </motion.div>
