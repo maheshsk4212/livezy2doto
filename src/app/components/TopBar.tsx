@@ -48,15 +48,26 @@ export function TopBar({ variant = "dashboard", title, onSearchClick }: Props) {
       </div>
 
       <div className="px-4 pt-3 pb-3">
-        <button
-          onClick={onSearchClick || (() => go({ name: "shop-home" }))}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const q = new FormData(e.currentTarget).get("q") as string;
+            if (q?.trim()) {
+              go({ name: "shop-search", query: q.trim() });
+            }
+          }}
           className="w-full h-11 bg-white text-slate-500 rounded-xl flex items-center gap-2 px-3 shadow-sm"
         >
           <Search className="w-4 h-4 shrink-0" />
-          <span className="text-sm truncate">
-            {variant === "shop" ? "Search products, brands…" : "Search across Livezy"}
-          </span>
-        </button>
+          <input
+            name="q"
+            type="search"
+            placeholder={variant === "shop" ? "Search products, brands…" : "Search across Livezy"}
+            className="flex-1 w-full bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400"
+            autoComplete="off"
+            onClick={onSearchClick}
+          />
+        </form>
       </div>
 
       {variant === "dashboard" && (

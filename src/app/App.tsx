@@ -11,6 +11,7 @@ import { Cart } from "./components/ecommerce/Cart";
 import { Checkout } from "./components/ecommerce/Checkout";
 import { OrderSuccess } from "./components/ecommerce/OrderSuccess";
 import { Orders } from "./components/ecommerce/Orders";
+import { ShopSearch } from "./components/ecommerce/ShopSearch";
 import { Account } from "./components/Account";
 import { LobStub } from "./components/LobStub";
 import { Auth } from "./components/Auth";
@@ -41,6 +42,7 @@ function Shell() {
   const showShopTop = screen.name === "shop-home";
   const showBottomNav = ["dashboard", "shop-home", "shop-orders", "account"].includes(screen.name);
   const showAuthTop = screen.name === "auth";
+  const hideTopBar = screen.name === "shop-search";
 
   let content: React.ReactNode = null;
   switch (screen.name) {
@@ -55,6 +57,7 @@ function Shell() {
     case "shop-success": content = <OrderSuccess orderId={screen.orderId} />; break;
     case "shop-tracker": content = <OrderTracker orderId={screen.orderId} />; break;
     case "shop-orders": content = <Orders />; break;
+    case "shop-search": content = <ShopSearch query={screen.query} />; break;
     case "account": content = <Account />; break;
     case "lob-stub": content = <LobStub lob={screen.lob} />; break;
     default: content = <Dashboard />;
@@ -65,7 +68,7 @@ function Shell() {
       <div className="w-full max-w-[460px] min-h-screen bg-slate-50 relative flex flex-col shadow-xl overflow-x-hidden">
         {showDashboardTop && <TopBar variant="dashboard" />}
         {showShopTop && <TopBar variant="shop" />}
-        {!showDashboardTop && !showShopTop && !showAuthTop && <TopBar variant="back" title={titleForBack()} />}
+        {!showDashboardTop && !showShopTop && !showAuthTop && !hideTopBar && <TopBar variant="back" title={titleForBack()} />}
         <main className={`flex-1 min-w-0 ${showBottomNav ? "pb-20" : ""}`}>{content}</main>
         {showBottomNav && <BottomNav />}
       </div>
