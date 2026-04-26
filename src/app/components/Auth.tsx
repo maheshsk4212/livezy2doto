@@ -160,7 +160,7 @@ export function Auth() {
                 <button
                   type="button"
                   onClick={() => setStep("verify")}
-                  className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition active:scale-95"
+                  className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 px-8 py-2 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition active:scale-95"
                 >
                   Send OTP
                   <ArrowRight className="h-4 w-4" />
