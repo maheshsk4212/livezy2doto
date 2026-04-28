@@ -1,3 +1,4 @@
+import { Toaster } from "sonner";
 import { StoreProvider, useStore } from "./store";
 import { TopBar } from "./components/TopBar";
 import { BottomNav } from "./components/BottomNav";
@@ -84,6 +85,7 @@ export default function App() {
   return (
     <StoreProvider>
       <Shell />
+      <Toaster position="top-center" richColors />
     </StoreProvider>
   );
 }
