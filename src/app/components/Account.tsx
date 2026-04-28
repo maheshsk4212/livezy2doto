@@ -11,58 +11,14 @@ import {
   Wallet,
   Palette,
   Check,
-  Smartphone,
-  Share,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BottomSheet } from "./BottomSheet";
 import { useStore } from "../store";
-import { toast } from "sonner";
 
 export function Account() {
   const { themeMode, setThemeMode, setAuthComplete, go } = useStore();
   const [themeSheetOpen, setThemeSheetOpen] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [isIOS, setIsIOS] = useState(false);
-
-  useEffect(() => {
-    const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-
-    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-
-    // Check if iOS
-    const userAgent = window.navigator.userAgent.toLowerCase();
-    const isIOSDevice = /iphone|ipad|ipod/.test(userAgent);
-    setIsIOS(isIOSDevice);
-
-    return () => {
-      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
-    };
-  }, []);
-
-  const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === "accepted") {
-        setDeferredPrompt(null);
-        toast.success("App installed successfully!");
-      }
-    } else if (isIOS) {
-      toast("To install Livezy on your iPhone", {
-        description: "Tap the share button (square with arrow) and select 'Add to Home Screen'.",
-        duration: 5000,
-        icon: <Share className="w-4 h-4" />,
-      });
-    } else {
-      toast.info("Installation", {
-        description: "To install this app, use the 'Add to Home Screen' option in your browser menu.",
-      });
-    }
-  };
 
   const currentThemeLabel = themeMode === "green" ? "Green" : "Default";
 
@@ -89,17 +45,6 @@ export function Account() {
         { icon: Bell, label: "Notifications" },
         { icon: Shield, label: "Privacy & Security" },
         { icon: HelpCircle, label: "Help & Support" },
-      ],
-    },
-    {
-      title: "App",
-      items: [
-        { 
-          icon: Smartphone, 
-          label: "Add to Home Screen", 
-          sub: "Get quick access to Livezy", 
-          action: handleInstallClick 
-        },
       ],
     },
   ];
